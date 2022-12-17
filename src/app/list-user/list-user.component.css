@@ -1,0 +1,9 @@
+.table img {
+    height: 40px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

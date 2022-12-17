@@ -1,0 +1,82 @@
+<div><div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    lagn
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item" (click)="language(1)">Eng</a></li>
+    <li><a class="dropdown-item" (click)="language(2)">Thai</a></li>
+  </ul>
+</div></div>
+<div *ngIf="!id">
+  <h2 class="text-primary text-center">Attraction List</h2>
+  <!-- search  -->
+  <div class="container">
+    <form class="d-flex">
+      <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="search"
+        [(ngModel)]="searchTerm">
+      <button class="btn btn-outline-dark" (click)="search()">Search</button>
+    </form>&nbsp;
+    <!-- alert -->
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="alert">
+      <strong>Error:</strong>{{alert}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <!-- sort Button -->
+    <div class="dropdown ">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Sort By
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" (click)="ascen()">Ascending</a></li>
+        <li><a class="dropdown-item" (click)="descen()">Descending</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- List all -->
+  <div class="container d-flex row row-cols-auto justify-content-center">
+    <div class="card" style="width: 18rem;" *ngFor="let atrac of Attraction" routerLink="/attraction/{{atrac.id}}"
+      (click)="getDetails()">
+      <img src="{{atrac.coverimage}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Id</h5>
+        <p class="card-text">{{atrac.id}}</p>
+        <h5 class="card-title">Name</h5>
+        <p class="card-text">{{atrac.name}}</p>
+        <h5 class="card-title">Details</h5>
+        <p class="card-text">{{atrac.detail}}</p>
+      </div>
+    </div>
+    <!-- pagination  -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li class="page-item" tabindex="1">
+          <a class="page-link" (click)="Prev()" [ngClass]="{'disabled': page==1}">Previous</a>
+        </li>
+        <!-- <li class="page-item"><a class="page-link" (click)="pages(1)">1</a></li>
+      <li class="page-item"><a class="page-link" (click)="pages(2)">2</a></li>
+      <li class="page-item"><a class="page-link" (click)="pages(3)">3</a></li> -->
+        <li class="page-item">
+          <a class="page-link" (click)="Next()" [ngClass]="{'disabled': page == total_pages}">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+<!-- list one  -->
+<div *ngIf="id">
+  <div class="container ">
+    <div class="card" style="width: 18rem;" *ngIf="attract">
+      <img src="{{attract.coverimage}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Name</h5>
+        <p class="card-text">{{attract.name}}</p>
+        <h5 class="card-title">Details</h5>
+        <p class="card-text">{{attract.detail}}</p>
+      </div>
+    </div>
+  </div>
+</div>

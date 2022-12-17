@@ -1,0 +1,30 @@
+<div class="container">
+    <h2 class="text-center text-primary">Details</h2>
+
+
+    <div>&nbsp;
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Avatar</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">UserName</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr *ngFor="let user of users; let i for index"> -->
+                <tr *ngIf="user">
+                    <th scope="row">{{user.user.id}}</th>
+                    <td><img src="{{user.user.avatar}}" alt="" srcset=""></td>
+                    <td>{{user.user.fname}}</td>
+                    <td>{{user.user.lname}}</td>
+                    <td>{{user.user.username}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+    <button class="btn btn-primary" routerLink="/listUser">Back to all list</button>
+</div>

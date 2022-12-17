@@ -1,0 +1,174 @@
+<div class="container">
+    <!-- create button  -->
+    <div class="flex">
+        <h3 class="text-left text-primary">List of all Users</h3>
+        <button class="btn btn-dark flex" data-bs-toggle="modal" data-bs-target="#exampleModal1">Create</button>
+    </div>&nbsp;
+    <!-- Search form  -->
+    <form class="d-flex">
+        <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="search"
+            [(ngModel)]="searchTerm">
+        <button class="btn btn-outline-dark" (click)="searchUser()">Search</button>
+    </form>&nbsp;
+    <!-- sort Button -->
+    <div class="dropdown ">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Sort By
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" (click)="ascen()">Ascending</a></li>
+            <li><a class="dropdown-item" (click)="descen()">Descending</a></li>
+        </ul>
+    </div>
+    <div>&nbsp;
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Avatar</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users ">
+                    <th scope="row">{{user.id}}</th>
+                    <td><img src="{{user.avatar}}" alt="" srcset=""></td>
+                    <td>{{user.fname}}</td>
+                    <td>{{user.lname}}</td>
+                    <td>{{user.username}}</td>
+                    <td><button type="button" class="btn btn-success" routerLink="/details/{{user.id}}">
+                            Details
+                        </button>&nbsp;
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdateUserModel"
+                            (click)="edit(user.id)">Edit</button>&nbsp;
+                        <button class="btn btn-danger" (click)="delete(user.id)">Del</button>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+    <!-- pagination  -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" tabindex="1">
+                <a class="page-link" (click)="Prev()" [ngClass]="{'disabled': page==1}">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" (click)="pages(1)">1</a></li>
+            <li class="page-item"><a class="page-link" (click)="pages(2)">2</a></li>
+            <li class="page-item"><a class="page-link" (click)="pages(3)">3</a></li>
+            <li class="page-item">
+                <a class="page-link" (click)="Next()" >Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<!-- Modal create -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="exampleModalLabel">Create User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="form1">
+
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="fname" placeholder="First Name"
+                            formControlName="fname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname" placeholder="Last Name"
+                            formControlName="lname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="username" placeholder="User Name"
+                            formControlName="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                            formControlName="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Avatar</label>
+                        <select class="form-select" aria-label="Default select example" formControlName="avatar">
+                            <option value="https://www.melivecode.com/users/cat.png">Cat</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary" (click)="submit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Update -->
+<div class="modal fade" id="UpdateUserModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="exampleModalLabel">UpdateUser</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" [formGroup]="form2">
+                    <!-- <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Id</label>
+                        <input type="text" class="form-control" id="id" placeholder="Your Id"
+                            formControlName="id">
+                    </div> -->
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="fname1" placeholder="First Name"
+                            formControlName="fname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname1" placeholder="Last Name"
+                            formControlName="lname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="username1" placeholder="User Name"
+                            formControlName="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password1" placeholder="Password"
+                            formControlName="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email1" placeholder="Email"
+                            formControlName="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formGroupExampleInput2" class="form-label">Avatar</label>
+                        <select class="form-select" aria-label="Default select example" formControlName="avatar">
+                            <option value="https://www.melivecode.com/users/cat.png">Cat</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary" (click)="update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
